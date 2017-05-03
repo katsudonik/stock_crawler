@@ -20,12 +20,16 @@ def download(url, path):
         print("[ERROR] failed to downlaod url=", url)
 
 def pre():
-    browser.get(DOMAIN + '/%E6%A0%AA%E4%BE%A1/%E3%82%A2%E3%83%83%E3%83%97%E3%83%AB%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%BC%E3%83%8A%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB')
-    img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
-    download(img_href, 'img.jpg')
+    browser.get(DOMAIN + '/ranking/kai200.html')
+    links = browser.find_elements_by_css_selector("rankingFrame > a")
+    for a in links:
+        href = a.get_attribute('href')
+        print(href)
+        browser.get(DOMAIN + href)
+        img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
+        print(img_href)
+        download(img_href, 'img.jpg')
 
-print(browser.current_url)
-print(browser.page_source)
 pre()
 
 
