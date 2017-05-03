@@ -22,15 +22,19 @@ def download(url, path):
 def pre():
     browser.get(DOMAIN + '/ranking/kai200.html')
     links = browser.find_elements_by_css_selector(".rankingFrame:nth-of-type(2) a")
+    _links = []
     for a in links:
-        href = a.get_attribute('href')
-        print(a.text)
-        file_name = a.text + '.png'
-        print(href)
-        browser.get(href)
+        link = {}
+        link['href'] = a.get_attribute('href')
+        print(link['href'])
+        link['file_name'] = a.text + '.png'
+        print(link['file_name'])
+
+    for link in links:
+        browser.get(link['href'])
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
         print(img_href)
-        download(img_href, file_name)
+        download(img_href, link['file_name'])
 
 pre()
 
