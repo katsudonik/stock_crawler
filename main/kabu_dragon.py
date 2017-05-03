@@ -24,11 +24,12 @@ def pre():
     links = browser.find_elements_by_css_selector(".rankingFrame a")
     for a in links:
         href = a.get_attribute('href')
+        print(a.text)
         print(href)
         browser.get(href)
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
         print(img_href)
-        download(img_href, 'img.jpg')
+        download(img_href, a.text + '.png')
 
 pre()
 
