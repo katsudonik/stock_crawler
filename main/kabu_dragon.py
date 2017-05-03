@@ -29,8 +29,9 @@ def pre():
         print(link['href'])
         link['file_name'] = a.text + '.png'
         print(link['file_name'])
+        _links.append(link)
 
-    for link in links:
+    for link in _links:
         browser.get(link['href'])
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
         print(img_href)
