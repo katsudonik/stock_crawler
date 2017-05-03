@@ -21,7 +21,7 @@ def download(url, path):
 
 def pre():
     browser.get(DOMAIN + '/ranking/kai200.html')
-    links = browser.find_elements_by_css_selector("rankingFrame > a")
+    links = browser.find_elements_by_css_selector(".rankingFrame > a")
     for a in links:
         href = a.get_attribute('href')
         print(href)
