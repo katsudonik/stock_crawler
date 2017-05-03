@@ -31,14 +31,14 @@ def pre():
         print(link['file_name'])
         _links.append(link)
 
+    os.makedirs('image/downloaded')
     for link in _links:
         browser.get(link['href'])
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
         print(img_href)
-        download(img_href, link['file_name'])
+        download(img_href, 'image/downloaded/' + link['file_name'])
 
 pre()
-
 
 
 
