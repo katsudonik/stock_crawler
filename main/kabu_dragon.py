@@ -25,7 +25,7 @@ def pre():
     for a in links:
         href = a.get_attribute('href')
         print(href)
-        browser.get(DOMAIN + href)
+        browser.get(href)
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
         print(img_href)
         download(img_href, 'img.jpg')
