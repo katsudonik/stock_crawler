@@ -19,8 +19,8 @@ def main():
     y_train = np_utils.to_categorical(y_train, nb_classes)
     y_test  = np_utils.to_categorical(y_test, nb_classes)
     # モデルを訓練し評価する
-    X_train = X_train.reshape((len(X_train), 3, 50, 50))
-    X_test = X_test.reshape((len(X_test), 3, 50, 50))
+    X_train = X_train.reshape((X_train.shape[0], 50, 50, 3))
+    X_test = X_test.reshape((X_test.shape[0], 50, 50, 3))
     model = model_train(X_train, y_train)
     model_eval(model, X_test, y_test)
 
