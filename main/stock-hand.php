@@ -47,6 +47,7 @@ if ($m == "mv") { // 振り分け
     echo "<h1>完了です!</h1>"; exit;
   }
   shuffle($files); // 適当なファイルを選ぶ
+  setlocale(LC_ALL, 'ja_JP.UTF-8');
   $target = basename($files[0]); 
   $remain = count($files); // 残りのファイル数
   $buttons = ""; // 選択肢の生成
