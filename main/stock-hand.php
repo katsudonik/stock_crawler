@@ -64,7 +64,7 @@ if ($m == "mv") { // 振り分け
                      font-size: 24px; }
       </style></head><body>
       <h3 style="font-size:12px">選んでください(残り:$remain)</h3>
-      <img src="./image/$unknown_dir/$target" width=300><br>
+      <img src="./image/$unknown_dir/$target" width=1500><br>
       $buttons
     </body></html>
 EOS;
