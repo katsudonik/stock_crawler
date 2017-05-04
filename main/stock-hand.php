@@ -4,6 +4,7 @@ $base_dir = dirname(__FILE__). "/image";
 $unknown_dir = "downloaded";
 $dirs = array(
   "これから上昇" => "up_signal",
+  "高値更新" => "high_update",
   "もう上がった" => "after_up",
   "これから下降" => "down_signal",
   "その他" => "other",
