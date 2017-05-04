@@ -10,6 +10,7 @@ browser = webdriver.PhantomJS()
 browser.implicitly_wait(3)
 
 DOMAIN = "http://www.kabudragon.com"
+DOWNLOAD_DIR = 'image/downloaded'
 
 def download(url, path):
     try:
@@ -32,7 +33,9 @@ def pre():
         print(link['file_name'])
         _links.append(link)
 
-    os.makedirs('image/downloaded')
+    if not os.path.isfile(DOWNLOAD_DIR):
+        os.makedirs(DOWNLOAD_DIR)
+
     for link in _links:
         browser.get(link['href'])
         img_href = browser.find_element_by_css_selector(".chart2").get_attribute('src')
