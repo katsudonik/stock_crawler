@@ -14,7 +14,7 @@ X = [] # 画像データ
 Y = [] # ラベルデータ
 for idx, cat in enumerate(categories):
     image_dir = root_dir + "/" + cat
-    files = glob.glob(image_dir + "/*.jpg")
+    files = glob.glob(image_dir + "/*.png")
     print("---", cat, "を処理中")
     for i, f in enumerate(files):
         img = Image.open(f)
