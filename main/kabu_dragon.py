@@ -33,7 +33,8 @@ def pre():
         print(link['file_name'])
         _links.append(link)
 
-    if not os.path.isfile(DOWNLOAD_DIR):
+    print(os.path.isfile(DOWNLOAD_DIR))
+    if not os.path.isfile(DOWNLOAD_DIR) == True:
         os.makedirs(DOWNLOAD_DIR)
 
     for link in _links:
