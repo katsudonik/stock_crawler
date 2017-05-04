@@ -18,7 +18,9 @@ def main():
     X_test  = X_test.astype("float")  / 256
     y_train = np_utils.to_categorical(y_train, nb_classes)
     y_test  = np_utils.to_categorical(y_test, nb_classes)
-    # モデルを訓練し評価する    
+    # モデルを訓練し評価する
+    X_train = X_train.reshape((len(X_train), 1, 28, 28))
+    X_test = X_test.reshape((len(X_test), 1, 28, 28))
     model = model_train(X_train, y_train)
     model_eval(model, X_test, y_test)
 
