@@ -42,7 +42,7 @@ if ($m == "mv") { // 振り分け
   echo "<a href='$self'>Thank you, moved.</a>";
 } else {
   // 牛丼の選択フォームを表示
-  $files = glob("$base_dir/$unknown_dir/*.jpg"); // 画像列挙
+  $files = glob("$base_dir/$unknown_dir/*.png"); // 画像列挙
   if (count($files) == 0) {
     echo "<h1>完了です!</h1>"; exit;
   }
