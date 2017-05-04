@@ -19,8 +19,8 @@ def main():
     y_train = np_utils.to_categorical(y_train, nb_classes)
     y_test  = np_utils.to_categorical(y_test, nb_classes)
     # モデルを訓練し評価する
-    # X_train = X_train.reshape((len(X_train), 3, 128, 128))
-    # X_test = X_test.reshape((len(X_test), 3, 128, 128))
+    # X_train = X_train.reshape((len(X_train), 3, 50, 50))
+    # X_test = X_test.reshape((len(X_test), 3, 50, 50))
     model = model_train(X_train, y_train)
     model_eval(model, X_test, y_test)
 
@@ -29,7 +29,7 @@ def build_model(in_shape):
     model = Sequential()
     model.add(Conv2D(32, (3, 3),
     padding='same',
-	input_shape=(119,50,50,3)))
+	input_shape=(50,50,3)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
