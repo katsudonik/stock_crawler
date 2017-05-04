@@ -5,7 +5,7 @@ import numpy as np
 
 # 分類対象のカテゴリを選ぶ --- (※1)
 root_dir = "./image/"
-categories = ["up_signal", "after_up", "down_signal", "after_down", "other"]
+categories = ["up_signal", "high_update", "after_up", "down_signal", "other"]
 nb_classes = len(categories)
 image_size = 50
 
