@@ -27,8 +27,7 @@ def pre():
         link = {}
         link['href'] = a.get_attribute('href')
         print(link['href'])
-
-        id = a.parent.find_element_by_xpath('preceding-sibling::td')
+        id = a.find_element_by_xpath('parent::node()/preceding-sibling::td[position()=1]')
         link['file_name'] = id.text + '.png'
         print(link['file_name'])
         _links.append(link)
