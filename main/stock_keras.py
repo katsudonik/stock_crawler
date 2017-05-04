@@ -29,7 +29,7 @@ def build_model(in_shape):
     model = Sequential()
     model.add(Conv2D(32, (3, 3),
     padding='same',
-	input_shape=(50,50,3)))
+	input_shape=in_shape))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
@@ -51,7 +51,7 @@ def build_model(in_shape):
 
 # モデルを訓練する --- (※3)
 def model_train(X, y):
-    model = build_model(X.shape[1:])
+    model = build_model(X.shape[3:])
     model.fit(X, y, batch_size=32, nb_epoch=30)
     # モデルを保存する --- (※4)
     hdf5_file = "./image/stock-model.hdf5"
