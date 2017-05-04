@@ -27,7 +27,7 @@ def build_model(in_shape):
     model = Sequential()
     model.add(Conv2D(32, (3, 3),
     padding='same',
-	input_shape=(3,None,None)))
+	input_shape=(3,128,128)))
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
