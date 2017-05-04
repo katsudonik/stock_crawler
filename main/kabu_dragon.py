@@ -10,7 +10,7 @@ browser = webdriver.PhantomJS()
 browser.implicitly_wait(3)
 
 DOMAIN = "http://www.kabudragon.com"
-DOWNLOAD_DIR = 'image/downloaded'
+DOWNLOAD_DIR = os.getcwd() + '/image/downloaded'
 
 def download(url, path):
     try:
