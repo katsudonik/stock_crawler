@@ -29,7 +29,7 @@ def build_model():
     #keras2->Conv2D
     model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet
     padding='same',
-	input_shape=(config['categories']['height'], config['categories']['width'], config['categories']['channels']))) #channels_last #first layer in a model, provide input_shape
+	input_shape=(config['img']['height'], config['img']['width'], config['img']['channels']))) #channels_last #first layer in a model, provide input_shape
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2))) #2*2に圧縮
     model.add(Dropout(0.25))
