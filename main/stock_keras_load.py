@@ -1,6 +1,7 @@
 from keras.utils import np_utils
 import numpy as np
 from keras.models import model_from_json
+import yaml
 
 ### functions ###########################################################################
 def load_config(path):
