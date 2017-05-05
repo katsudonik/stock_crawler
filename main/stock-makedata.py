@@ -7,7 +7,7 @@ import numpy as np
 root_dir = "./image/"
 categories = ["up_signal", "high_update", "after_up", "down_signal", "other"]
 nb_classes = len(categories)
-image_size = 50
+image_size = 128
 
 # フォルダごとの画像データを読み込む --- (※2)
 X = [] # 画像データ
