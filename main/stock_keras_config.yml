@@ -1,0 +1,8 @@
+img_dir: "./image"
+categories: ["up_signal", "high_update", "after_up", "down_signal", "other"] # 分類対象のカテゴリ
+img:
+  height: 128
+  width: 128
+  channels: 3 #カラー画像:3　※白黒の場合は1
+model_file: "./stock_model.json"
+weights_file: "./image/stock-model.hdf5"
