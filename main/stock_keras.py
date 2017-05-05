@@ -51,7 +51,7 @@ def build_model(in_shape):
 
 # モデルを訓練する --- (※3)
 def model_train(X_train, y_train):
-    model = build_model(X_train.shape[3:])
+    model = build_model(X_train.shape[1:])
     model.fit(X_train, y_train, batch_size=32, nb_epoch=30)
     # モデルを保存する --- (※4)
     hdf5_file = "./image/stock-model.hdf5"
