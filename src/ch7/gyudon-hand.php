@@ -1,13 +1,11 @@
 <?php
 $self = "gyudon-hand.php";
 $base_dir = dirname(__FILE__). "/image";
-$unknown_dir = "gyudon";
+$unknown_dir = "downloaded";
 $dirs = array(
-  "普通の牛丼" => "normal",
-  "紅ショウガ牛丼" => "beni",
-  "ねぎ玉牛丼" => "negi",
-  "チーズ牛丼" => "cheese",
-  "キムチ牛丼" => "kimuti",
+  "これから上昇" => "up_signal",
+  "もう上がった" => "after_up",
+  "これから下降" => "down_signal",
   "その他" => "other",
 );
 // 必要なディレクトリを作成
