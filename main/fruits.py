@@ -10,7 +10,7 @@ import os
 image_list = []
 label_list = []
 
-data_dir = "data/train"
+data_dir = "/usr/local/data/train"
 
 for dir in os.listdir(data_dir):
     if dir == ".DS_Store":
