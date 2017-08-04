@@ -10,11 +10,13 @@ import os
 image_list = []
 label_list = []
 
-for dir in os.listdir("data/train"):
+data_dir = "data/train"
+
+for dir in os.listdir(data_dir):
     if dir == ".DS_Store":
         continue
 
-    dir1 = "data/train/" + dir
+    dir1 = data_dir + dir
     label = 0
 
     if dir == "apple":
