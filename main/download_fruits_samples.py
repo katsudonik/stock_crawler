@@ -14,8 +14,9 @@ def init():
         'crawled_now' : '/home/vcp/stock_crawler/src/ch1/file.txt',
     }
 
-def getSoup(url, soup=BeautifulSoup(res, "html.parser")):
+def getSoup(url):
     res = req.urlopen(url)
+    soup=BeautifulSoup(res, "html.parser")
     return soup
 
 def download(url):
