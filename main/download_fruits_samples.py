@@ -28,6 +28,7 @@ def crawl():
     for img in imgs:
         download(img['src'])
 
+
 ### main #############################################################################################
 settings = init()
 crawl()
