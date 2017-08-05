@@ -36,7 +36,7 @@ for dir in os.listdir(data_dir):
             image = image.transpose(2, 0, 1)
             # さらにフラットな1次元配列に変換。最初の1/3はRed、次がGreenの、最後がBlueの要素がフラットに並ぶ。
             image = image.reshape(1, image.shape[0] * image.shape[1] * image.shape[2]).astype("float32")[0]
-            # 出来上がった配列をimage_listに追加。
+            # convert to 0-1
             image_list.append(image / 255.)
 
 # kerasに渡すためにnumpy配列に変換。
