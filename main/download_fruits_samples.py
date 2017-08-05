@@ -14,14 +14,15 @@ def init():
         'crawled_now' : '/home/vcp/stock_crawler/src/ch1/file.txt',
     }
 
-def getSoup(url):
+def getSoup(url, soup=BeautifulSoup(res, "html.parser")):
     res = req.urlopen(url)
-    return BeautifulSoup(res, "html.parser")
+    return soup
 
 def download(url):
     req.urlretrieve(url, os.path.basename(url))
 
 def crawl():
+    soup = getSoup("https://www.google.co.jp/imghp?hl=ja&tab=wi&authuser=0")
     soup = getSoup("https://www.google.co.jp/search?q=%E3%82%8A%E3%82%93%E3%81%94&safe=off&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjz857EqZLSAhVFk5QKHcp2DPMQ_AUICCgB&biw=1280&bih=703")
     imgs = soup.findAll("img", {"class":"rg_ic"})
     for img in imgs:
