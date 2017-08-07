@@ -26,6 +26,7 @@ def load_data(quantified_data_path):
 # モデルを構築 --- (※2)
 def build_model():
     model = Sequential()
+
     #keras2->Conv2D
     model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet
     padding='same',
@@ -33,17 +34,22 @@ def build_model():
     model.add(Activation('relu'))
     model.add(MaxPooling2D(pool_size=(2, 2))) #2*2に圧縮
     model.add(Dropout(0.25))
+
     model.add(Conv2D(64, (3, 3), padding='same'))
     model.add(Activation('relu'))
+
     model.add(Conv2D(64, (3, 3)))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
-    model.add(Flatten()) 
+    model.add(Flatten())
+
     model.add(Dense(512))
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
+
     model.add(Dense(len(config['categories'])))
     model.add(Activation('softmax'))
+
     model.compile(loss='binary_crossentropy',
 	optimizer='rmsprop',
 	metrics=['accuracy'])
