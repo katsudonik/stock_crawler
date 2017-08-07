@@ -1,7 +1,7 @@
 # coding:utf-8
 import numpy
 import pandas
-import matplotlib as plt
+import matplotlib.pyplot as plt
 
 from sklearn import preprocessing
 from keras.models import Sequential
@@ -9,6 +9,7 @@ from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 
 import os
+
 
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
@@ -47,31 +48,40 @@ class Lstm :
         model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
         return model
 
+    def learn(self, lstm, year):
+        name = self.csv.replace('{{year}}', str(year))
+        data_ = pandas.read_csv(name)
+        print(str(year))
+        data = data_
+        if (data is not None):
+            pandas.concat([data, data_])
+        
+        data.columns = ['date', 'open', 'high', 'low', 'close']
+        data['date'] = pandas.to_datetime(data['date'], format='%Y-%m-%d')
+
+        data['close'] = preprocessing.scale(data['close'])
+        data = data.sort_values(by='date')
+        data = data.reset_index(drop=True)
+        data = data.loc[:, ['date', 'close']]
+
+        split_pos = int(len(data) * 0.8)
+        x_train, y_train = lstm.load_data(data[['close']].iloc[0:split_pos], lstm.length_of_sequences)
+        x_test,  y_test  = lstm.load_data(data[['close']].iloc[split_pos:], lstm.length_of_sequences)
+
+        model = lstm.train(x_train, y_train)
+
+        predicted = model.predict(x_test)
+        result = pandas.DataFrame(predicted)
+        result.columns = ['predict']
+        result['actual'] = y_test
+        result.plot()
+        plt.show()
+    
     def run(self):
         lstm = Lstm()
 
         data = None
         for year in range(2007, 2017):
-            data_ = pandas.read_csv(self.csv.replace('{{year}}', str(year)))
-
-            data = data_ if (data is None) else pandas.concat([data, data_])
-            data.columns = ['date', 'open', 'high', 'low', 'close']
-            data['date'] = pandas.to_datetime(data['date'], format='%Y-%m-%d')
-
-            data['close'] = preprocessing.scale(data['close'])
-            data = data.sort_values(by='date')
-            data = data.reset_index(drop=True)
-            data = data.loc[:, ['date', 'close']]
-
-            split_pos = int(len(data) * 0.8)
-            x_train, y_train = lstm.load_data(data[['close']].iloc[0:split_pos], lstm.length_of_sequences)
-            x_test,  y_test  = lstm.load_data(data[['close']].iloc[split_pos:], lstm.length_of_sequences)
-
-            model = lstm.train(x_train, y_train)
-
-            predicted = model.predict(x_test)
-            result = pandas.DataFrame(predicted)
-            result.columns = ['predict']
-            result['actual'] = y_test
-            result.plot()
-            plt.show()
+            self.learn(lstm, year)
+            
+            
