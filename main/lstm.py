@@ -18,7 +18,7 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 class Lstm :
 
     def __init__(self):
-        self.length_of_sequences = 20
+        self.length_of_sequences = 5
         self.in_out_neurons = 1
         self.hidden_neurons = 300
         self.batch_size = 5
@@ -86,7 +86,7 @@ class Lstm :
 
     def diplay_sequence(self, sequence):
         result = pandas.DataFrame(sequence)
-        result.columns = ['traing_sequence']
+        result.columns = ['train_sequence']
         result.plot()
         plt.show()
 
