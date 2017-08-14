@@ -18,7 +18,7 @@ class NikkeiAveDownoader :
 
     def __init__(self):
         self.url = 'http://k-db.com/' + relative_url + '/{{year}}?download=csv'
-        self.path = 'csv/' + relative_url.replace('/', '_') + '_{{year}}.csv'
+        self.path = os.path.dirname(os.path.abspath(__file__)) + 'csv/' + relative_url.replace('/', '_') + '_{{year}}.csv'
 
     def download(self, url):
         req.urlretrieve(
