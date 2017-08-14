@@ -39,7 +39,7 @@ class Lstm :
         retY = numpy.array(Y)
         return retX, retY
 
-    def fetch_analyze_data(self, data_):
+    def fetch_analyze_data(self, data_, year):
         data = data_
         if (data is not None):
             pandas.concat([data, data_]) #TODO connect two data (?)-> do nothing...
@@ -52,7 +52,7 @@ class Lstm :
         data = data.reset_index(drop=True)
         data = data.loc[:, ['date', 'close']] # specificate data's column label(:,)
 
-        self.display_all_data(data[['close']])
+        self.display_all_data(data[['close']], year)
         #get 'close' data and split it into train/test
         split_pos = int(len(data) * 0.8) #TODO problem:test term is always end of year --> random on each year (not on each epoch)
         train = data[['close']].iloc[0:split_pos]
@@ -93,16 +93,16 @@ class Lstm :
         result.plot()
         plt.show()
 
-    def display_all_data(self, data):
+    def display_all_data(self, data, year):
         Y = []
         for i in range(len(data)):
             Y.append(data.iloc[i].as_matrix())
-        self.diplay_sequence(Y, ['all'])
+        self.diplay_sequence(Y, [str(year)])
 
     def learn(self, year):
         print(str(year))
         name = self.csv.replace('{{year}}', str(year))
-        data = self.fetch_analyze_data(pandas.read_csv(name))
+        data = self.fetch_analyze_data(pandas.read_csv(name), year)
         model = self.train(data['x_train'], data['y_train'])
         self.display(model.predict(data['x_test']), data['y_test'])
 
