@@ -11,13 +11,13 @@ end_year = 2017
 try:
     relative_url = sys.argv[1]
 except IndexError:
-    relative_url = 'indices/I101/1d'
+    relative_url = 'indices/I101'
 
 ### functions #############################################################################################
 class NikkeiAveDownoader :
 
     def __init__(self):
-        self.url = 'http://k-db.com/' + relative_url + '/{{year}}?download=csv'
+        self.url = 'http://k-db.com/' + relative_url + '/1d/{{year}}?download=csv'
         print(self.url)
         self.path = os.path.dirname(os.path.abspath(__file__)) + '/csv/' + relative_url.replace('/', '_') + '_{{year}}.csv'
 
