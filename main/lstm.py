@@ -104,7 +104,7 @@ class Lstm :
     def learn(self, year):
         print(str(year))
         name = self.csv.replace('{{year}}', str(year))
-        data = self.fetch_analyze_data(pandas.read_csv(name), year)
+        data = self.fetch_analyze_data(pandas.read_csv(name, encoding="SHIFT-JIS"), year)
         model = self.train(data['x_train'], data['y_train'])
         self.display(model.predict(data['x_test']), data['y_test'])
 
