@@ -16,6 +16,11 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 # train by data of 1 years sequences
 # Do not consider the long-term viewpoint
 
+# usage:
+# import lstm
+# ls=lstm.Lstm('indices/I101')
+# ls.run()
+
 class Lstm :
 
     def __init__(self, relative_url):
@@ -25,8 +30,6 @@ class Lstm :
         self.batch_size = 3
         self.nb_epoch = 300
 
-        if relative_url is None:
-            relative_url = 'indices/I101'
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
 
