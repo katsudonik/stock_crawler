@@ -9,6 +9,7 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 from pprint import pprint
+from numpy.random import *
 
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
@@ -46,9 +47,7 @@ class Lstm :
             for i in range(len(X)):
                 self.diplay_sequence(X[i], ['train_sequence'])
 
-        retX = numpy.array(X)
-        retY = numpy.array(Y)
-        return retX, retY
+        return numpy.array(X), numpy.array(Y)
 
     def fetch_analyze_data(self, data_, year):
         data = data_
@@ -64,23 +63,23 @@ class Lstm :
         data = data.loc[:, ['date', 'close']] # specificate data's column label(:,)
 
         self.display_all_data(data[['close']], year)
-        #get 'close' data and split it into train/test
+        return self.load_data(data[['close']]) #get 'close' data
 
-        retX, retY = self.load_data(data[['close']])
-        id_train, id_test = self.get_random_id(retX)
+    # test term shouldn't be immobilized and test data shouldn't be duplicated with train data
+    def divide_into_train_test(self, seq, label):
+        num_all = int(len(seq))
+        num_test = int(num_all * 0.2)
+        pos = randint(num_all - num_test)
+        pos_limit = pos + num_test
+        list = range(pos, pos_limit)
 
-        all_data = {}
-        all_data['x_train'] = retX[id_train]
-        all_data['x_test'] = retX[id_test]
-        all_data['y_train'] = retY[id_train]
-        all_data['y_test'] = retY[id_test]
-        return all_data
+        xTest = seq[pos : pos_limit]
+        xTrain = numpy.delete(seq, list, 0)
 
-    def get_random_id(self, dataset):
-        num_all = int(len(dataset))
-        num_train = int(num_all * 0.8)
-        id_all   = numpy.random.choice(num_all, num_all, replace=False)
-        return id_all[0:num_train], id_all[num_train:num_all]
+        yTest = label[pos : pos_limit]
+        yTrain = numpy.delete(label, list, 0)
+
+        return xTrain, xTest, yTrain, yTest
 
     def create_model(self) :
         model = Sequential()
@@ -92,11 +91,9 @@ class Lstm :
         model.compile(loss="mape", optimizer="adam")
         return model
 
-
     def train(self, X_train, y_train) :
-        model = self.create_model()
-        model.fit(X_train, y_train, self.batch_size, nb_epoch=self.nb_epoch) #default:shuffle=True
-        return model
+        self.model.fit(X_train, y_train, self.batch_size, nb_epoch=self.nb_epoch) #default:shuffle=True
+        return self.model
 
     def display(self, predicted, actual):
         result = pandas.DataFrame(predicted)
@@ -118,14 +115,16 @@ class Lstm :
         self.diplay_sequence(Y, [str(year)])
 
     def learn(self, year):
-        print(str(year))
         name = self.csv.replace('{{year}}', str(year))
-        data = self.fetch_analyze_data(pandas.read_csv(name, encoding="SHIFT-JIS"), year)
-        model = self.train(data['x_train'], data['y_train'])
-        self.display(model.predict(data['x_test']), data['y_test'])
+        sequences, labels = self.fetch_analyze_data(pandas.read_csv(name, encoding="SHIFT-JIS"), year)
+        xTrain, xTest, yTrain, yTest = self.divide_into_train_test(sequences, labels)
+        model = self.train(xTrain, yTrain)
+        self.display(model.predict(xTest), yTest)
 
     def run(self):
+        self.model = self.create_model()
         for year in range(2007, 2017):
             self.learn(year)
             
     # TODO problem: Every year the market can not be the same. term is should be longer
+
