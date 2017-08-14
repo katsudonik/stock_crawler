@@ -4,6 +4,9 @@ import os
 
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
+start_year = 2007
+end_year = 2017
+
 ### functions #############################################################################################
 class NikkeiAveDownoader :
 
@@ -19,5 +22,5 @@ class NikkeiAveDownoader :
 ### main #############################################################################################
 if __name__ == "__main__":
     nikkeiAveDownoader = NikkeiAveDownoader()
-    for year in range(2007, 2017):
+    for year in range(start_year, end_year):
         nikkeiAveDownoader.download(year)
