@@ -21,33 +21,15 @@ class Lstm :
         self.hidden_neurons = 300
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
 
-
     def load_data(self, data, n_prev=10):
         X, Y = [], []
-        print(len(data))
+        print(str(len(data)))
         for i in range(len(data) - n_prev):
             X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
             Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
         retX = numpy.array(X)
         retY = numpy.array(Y)
         return retX, retY
-
-
-    def create_model(self) :
-        model = Sequential()
-        model.add(LSTM(self.hidden_neurons, \
-                       batch_input_shape=(None, self.length_of_sequences, self.in_out_neurons), \
-                       return_sequences=False))
-        model.add(Dense(self.in_out_neurons))
-        model.add(Activation("linear"))
-        model.compile(loss="mape", optimizer="adam")
-        return model
-
-
-    def train(self, X_train, y_train) :
-        model = self.create_model()
-        model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
-        return model
 
     def fetch_analyze_data(self, data_, analyze_column = ['date', 'close']):
         data = data_
@@ -73,6 +55,22 @@ class Lstm :
 
         return all_data
 
+    def create_model(self) :
+        model = Sequential()
+        model.add(LSTM(self.hidden_neurons, \
+                       batch_input_shape=(None, self.length_of_sequences, self.in_out_neurons), \
+                       return_sequences=False))
+        model.add(Dense(self.in_out_neurons))
+        model.add(Activation("linear"))
+        model.compile(loss="mape", optimizer="adam")
+        return model
+
+
+    def train(self, X_train, y_train) :
+        model = self.create_model()
+        model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
+        return model
+
     def display(self, predicted, y_test):
         result = pandas.DataFrame(predicted)
         result.columns = ['predict']
@@ -88,9 +86,6 @@ class Lstm :
         self.display(model.predict(data['x_test']), data['y_test'])
 
     def run(self):
-        lstm = Lstm()
-
-        data = None
         for year in range(2007, 2017):
             self.learn(year)
             
