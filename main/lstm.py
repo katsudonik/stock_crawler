@@ -24,9 +24,10 @@ class Lstm :
 
     def load_data(self, data, n_prev=10):
         X, Y = [], []
+        print(len(data))
         for i in range(len(data) - n_prev):
-            X.append(data.iloc[i:(i+n_prev)].as_matrix())
-            Y.append(data.iloc[i+n_prev].as_matrix())
+            X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
+            Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
         retX = numpy.array(X)
         retY = numpy.array(Y)
         return retX, retY
@@ -48,40 +49,49 @@ class Lstm :
         model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
         return model
 
-    def learn(self, lstm, year):
-        name = self.csv.replace('{{year}}', str(year))
-        data_ = pandas.read_csv(name)
-        print(str(year))
+    def fetch_analyze_data(self, data_, analyze_column = ['date', 'close']):
         data = data_
         if (data is not None):
-            pandas.concat([data, data_])
-        
+            pandas.concat([data, data_]) #TODO connect two data (?)
+
+        #format
         data.columns = ['date', 'open', 'high', 'low', 'close']
         data['date'] = pandas.to_datetime(data['date'], format='%Y-%m-%d')
-
         data['close'] = preprocessing.scale(data['close'])
         data = data.sort_values(by='date')
         data = data.reset_index(drop=True)
-        data = data.loc[:, ['date', 'close']]
+        data = data.loc[:, analyze_column] # specificate data's column label(:,)
 
+        #split train/test by close?
         split_pos = int(len(data) * 0.8)
-        x_train, y_train = lstm.load_data(data[['close']].iloc[0:split_pos], lstm.length_of_sequences)
-        x_test,  y_test  = lstm.load_data(data[['close']].iloc[split_pos:], lstm.length_of_sequences)
+        data['train'] = data[['close']].iloc[0:split_pos]
+        data['test']  = data[['close']].iloc[split_pos:]
 
-        model = lstm.train(x_train, y_train)
+        all_data = {}
+        all_data['x_train'], all_data['y_train'] = self.load_data(data['train'], self.length_of_sequences)
+        all_data['x_test'],  all_data['y_test']  = self.load_data(data['test'], self.length_of_sequences)
 
-        predicted = model.predict(x_test)
+        return all_data
+
+    def display(self, predicted, y_test):
         result = pandas.DataFrame(predicted)
         result.columns = ['predict']
         result['actual'] = y_test
         result.plot()
         plt.show()
-    
+
+    def learn(self, year):
+        print(str(year))
+        name = self.csv.replace('{{year}}', str(year))
+        data = self.fetch_analyze_data(pandas.read_csv(name))
+        model = self.train(data['x_train'], data['y_train'])
+        self.display(model.predict(data['x_test']), data['y_test'])
+
     def run(self):
         lstm = Lstm()
 
         data = None
         for year in range(2007, 2017):
-            self.learn(lstm, year)
+            self.learn(year)
             
             
