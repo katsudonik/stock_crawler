@@ -21,6 +21,7 @@ class Lstm :
         self.length_of_sequences = 10
         self.in_out_neurons = 1
         self.hidden_neurons = 300
+        self.batch_size = 5
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
 
     def load_data(self, data):
@@ -69,13 +70,13 @@ class Lstm :
 
     def train(self, X_train, y_train) :
         model = self.create_model()
-        model.fit(X_train, y_train, batch_size=10, nb_epoch=100)
+        model.fit(X_train, y_train, self.batch_size, nb_epoch=100, shuffle=False) #TODO each batch is random?
         return model
 
-    def display(self, predicted, y_test):
+    def display(self, predicted, actual):
         result = pandas.DataFrame(predicted)
         result.columns = ['predict']
-        result['actual'] = y_test
+        result['actual'] = actual
         result.plot()
         plt.show()
 
