@@ -21,7 +21,7 @@ class Lstm :
         self.length_of_sequences = 5
         self.in_out_neurons = 1
         self.hidden_neurons = 300
-        self.batch_size = 5
+        self.batch_size = 3
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
 
     def load_data(self, data):
