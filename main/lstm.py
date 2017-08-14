@@ -18,14 +18,16 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
 class Lstm :
 
-    def __init__(self):
+    def __init__(self, relative_url):
         self.length_of_sequences = 20
         self.in_out_neurons = 1
         self.hidden_neurons = 300
         self.batch_size = 3
         self.nb_epoch = 300
-        self.relative_url = 'indices/I101'
-        self.csv = 'csv/' + self.relative_url.replace('/', '_') + '_1d_{{year}}.csv'
+
+        if relative_url is None:
+            relative_url = 'indices/I101'
+        self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
 
     def load_data(self, data):
