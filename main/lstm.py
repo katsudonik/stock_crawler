@@ -27,8 +27,8 @@ class Lstm :
         self.length_of_sequences = 20
         self.in_out_neurons = 1
         self.hidden_neurons = 300
-        self.batch_size = 3
-        self.nb_epoch = 300
+        self.batch_size = 10
+        self.nb_epoch = 100
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
 
@@ -65,15 +65,22 @@ class Lstm :
 
         self.display_all_data(data[['close']], year)
         #get 'close' data and split it into train/test
-        split_pos = int(len(data) * 0.8) #TODO problem:test term is always end of year --> random on each year (not on each epoch)
-        train = data[['close']].iloc[0:split_pos]
-        test  = data[['close']].iloc[split_pos:]
+
+        retX, retY = self.load_data(data[['close']])
+        id_train, id_test = self.get_random_id(retX)
 
         all_data = {}
-        all_data['x_train'], all_data['y_train'] = self.load_data(train)
-        all_data['x_test'],  all_data['y_test']  = self.load_data(test)
-
+        all_data['x_train'] = retX[id_train]
+        all_data['x_test'] = retX[id_test]
+        all_data['y_train'] = retY[id_train]
+        all_data['y_test'] = retY[id_test]
         return all_data
+
+    def get_random_id(self, dataset):
+        num_all = int(len(dataset))
+        num_train = int(num_all * 0.8)
+        id_all   = numpy.random.choice(num_all, num_all, replace=False)
+        return id_all[0:num_train], id_all[num_train:num_all]
 
     def create_model(self) :
         model = Sequential()
