@@ -18,11 +18,12 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 class Lstm :
 
     def __init__(self):
-        self.length_of_sequences = 10
+        self.length_of_sequences = 20
         self.in_out_neurons = 1
         self.hidden_neurons = 300
         self.batch_size = 3
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
+        self.display_train_sequence = False
 
     def load_data(self, data):
         X, Y = [], []
@@ -30,8 +31,9 @@ class Lstm :
             X.append(data.iloc[i:(i+self.length_of_sequences)].as_matrix()) #append 10 rows (past flow)
             Y.append(data.iloc[i+self.length_of_sequences].as_matrix()) #next row of X's 10 rows (predict value)
 
-        for i in range(len(X)):
-            self.diplay_sequence(X[i])
+        if(self.display_train_sequence):
+            for i in range(len(X)):
+                self.diplay_sequence(X[i], ['train_sequence'])
 
         retX = numpy.array(X)
         retY = numpy.array(Y)
@@ -50,8 +52,9 @@ class Lstm :
         data = data.reset_index(drop=True)
         data = data.loc[:, ['date', 'close']] # specificate data's column label(:,)
 
+        self.display_all_data(data[['close']])
         #get 'close' data and split it into train/test
-        split_pos = int(len(data) * 0.8)
+        split_pos = int(len(data) * 0.8) #TODO problem:test term is always end of year --> random on each year (not on each epoch)
         train = data[['close']].iloc[0:split_pos]
         test  = data[['close']].iloc[split_pos:]
 
@@ -84,11 +87,17 @@ class Lstm :
         result.plot()
         plt.show()
 
-    def diplay_sequence(self, sequence):
+    def diplay_sequence(self, sequence, columns):
         result = pandas.DataFrame(sequence)
-        result.columns = ['train_sequence']
+        result.columns = columns
         result.plot()
         plt.show()
+
+    def display_all_data(self, data):
+        Y = []
+        for i in range(len(data)):
+            Y.append(data.iloc[i].as_matrix())
+        self.diplay_sequence(Y, ['all'])
 
     def learn(self, year):
         print(str(year))
@@ -101,4 +110,4 @@ class Lstm :
         for year in range(2007, 2017):
             self.learn(year)
             
-            
+    # TODO problem: Every year the market can not be the same. term is should be longer
