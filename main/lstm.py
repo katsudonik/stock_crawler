@@ -8,6 +8,8 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
 
+from pprint import pprint
+
 import os
 
 
@@ -23,7 +25,7 @@ class Lstm :
 
     def load_data(self, data, n_prev=10):
         X, Y = [], []
-        print(str(len(data)))
+        pprint(vars(data))
         for i in range(len(data) - n_prev):
             X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
             Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
