@@ -23,11 +23,11 @@ class Lstm :
         self.hidden_neurons = 300
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
 
-    def load_data(self, data, n_prev=10):
+    def load_data(self, data):
         X, Y = [], []
-        for i in range(len(data) - n_prev):
-            X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
-            Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
+        for i in range(len(data) - self.length_of_sequences):
+            X.append(data.iloc[i:(i+self.length_of_sequences)].as_matrix()) #append 10 rows (past flow)
+            Y.append(data.iloc[i+self.length_of_sequences].as_matrix()) #next row of X's 10 rows (predict value)
         retX = numpy.array(X)
         retY = numpy.array(Y)
         return retX, retY
@@ -35,7 +35,7 @@ class Lstm :
     def fetch_analyze_data(self, data_):
         data = data_
         if (data is not None):
-            pandas.concat([data, data_]) #TODO connect two data (?)
+            pandas.concat([data, data_]) #TODO connect two data (?)-> do nothing...
 
         #format
         data.columns = ['date', 'open', 'high', 'low', 'close']
@@ -45,14 +45,14 @@ class Lstm :
         data = data.reset_index(drop=True)
         data = data.loc[:, ['date', 'close']] # specificate data's column label(:,)
 
-        #split train/test by close?
+        #get 'close' data and split it into train/test
         split_pos = int(len(data) * 0.8)
         train = data[['close']].iloc[0:split_pos]
         test  = data[['close']].iloc[split_pos:]
 
         all_data = {}
-        all_data['x_train'], all_data['y_train'] = self.load_data(train, self.length_of_sequences)
-        all_data['x_test'],  all_data['y_test']  = self.load_data(test, self.length_of_sequences)
+        all_data['x_train'], all_data['y_train'] = self.load_data(train)
+        all_data['x_test'],  all_data['y_test']  = self.load_data(test)
 
         return all_data
 
