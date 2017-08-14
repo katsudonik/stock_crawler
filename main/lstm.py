@@ -29,6 +29,10 @@ class Lstm :
         for i in range(len(data) - self.length_of_sequences):
             X.append(data.iloc[i:(i+self.length_of_sequences)].as_matrix()) #append 10 rows (past flow)
             Y.append(data.iloc[i+self.length_of_sequences].as_matrix()) #next row of X's 10 rows (predict value)
+
+        for i in range(len(X)):
+            self.diplay_sequence(X[i])
+
         retX = numpy.array(X)
         retY = numpy.array(Y)
         return retX, retY
@@ -77,6 +81,12 @@ class Lstm :
         result = pandas.DataFrame(predicted)
         result.columns = ['predict']
         result['actual'] = actual
+        result.plot()
+        plt.show()
+
+    def diplay_sequence(self, sequence):
+        result = pandas.DataFrame(sequence)
+        result.columns = ['traing_sequence']
         result.plot()
         plt.show()
 
