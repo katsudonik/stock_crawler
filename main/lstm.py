@@ -70,7 +70,7 @@ class Lstm :
 
     def train(self, X_train, y_train) :
         model = self.create_model()
-        model.fit(X_train, y_train, self.batch_size, nb_epoch=100, shuffle=False) #TODO each batch is random?
+        model.fit(X_train, y_train, self.batch_size, nb_epoch=100) #default:shuffle=True
         return model
 
     def display(self, predicted, actual):
