@@ -29,9 +29,12 @@ class Lstm :
         self.hidden_neurons = 300
         self.batch_size = 3
         self.nb_epoch = 300
-
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
+
+        self.columns = ['date', 'open', 'high', 'low', 'close']
+        if 'stock' in relative_url:
+            self.columns = ['date', 'open', 'high', 'low', 'close', 'yield', 'sales_value']
 
     def load_data(self, data):
         X, Y = [], []
@@ -53,7 +56,7 @@ class Lstm :
             pandas.concat([data, data_]) #TODO connect two data (?)-> do nothing...
 
         #format
-        data.columns = ['date', 'open', 'high', 'low', 'close']
+        data.columns = self.columns
         data['date'] = pandas.to_datetime(data['date'], format='%Y-%m-%d')
         data['close'] = preprocessing.scale(data['close'])
         data = data.sort_values(by='date')
