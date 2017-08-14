@@ -16,6 +16,11 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 # train by data of 1 years sequences
 # Do not consider the long-term viewpoint
 
+try:
+    relative_url = sys.argv[1]
+except IndexError:
+    relative_url = 'indices/I101'
+
 class Lstm :
 
     def __init__(self):
@@ -24,7 +29,7 @@ class Lstm :
         self.hidden_neurons = 300
         self.batch_size = 3
         self.nb_epoch = 300
-        self.csv = 'csv/indices_I101_1d_{{year}}.csv'
+        self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
 
     def load_data(self, data):
