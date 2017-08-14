@@ -32,7 +32,7 @@ class Lstm :
         retY = numpy.array(Y)
         return retX, retY
 
-    def fetch_analyze_data(self, data_, analyze_column = ['date', 'close']):
+    def fetch_analyze_data(self, data_):
         data = data_
         if (data is not None):
             pandas.concat([data, data_]) #TODO connect two data (?)
@@ -43,16 +43,16 @@ class Lstm :
         data['close'] = preprocessing.scale(data['close'])
         data = data.sort_values(by='date')
         data = data.reset_index(drop=True)
-        data = data.loc[:, analyze_column] # specificate data's column label(:,)
+        data = data.loc[:, ['date', 'close']] # specificate data's column label(:,)
 
         #split train/test by close?
         split_pos = int(len(data) * 0.8)
-        data['train'] = data[['close']].iloc[0:split_pos]
-        data['test']  = data[['close']].iloc[split_pos:]
+        train = data[['close']].iloc[0:split_pos]
+        test  = data[['close']].iloc[split_pos:]
 
         all_data = {}
-        all_data['x_train'], all_data['y_train'] = self.load_data(data['train'], self.length_of_sequences)
-        all_data['x_test'],  all_data['y_test']  = self.load_data(data['test'], self.length_of_sequences)
+        all_data['x_train'], all_data['y_train'] = self.load_data(train, self.length_of_sequences)
+        all_data['x_test'],  all_data['y_test']  = self.load_data(test, self.length_of_sequences)
 
         return all_data
 
