@@ -18,7 +18,7 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 class Lstm :
 
     def __init__(self):
-        self.length_of_sequences = 5
+        self.length_of_sequences = 10
         self.in_out_neurons = 1
         self.hidden_neurons = 300
         self.batch_size = 3
