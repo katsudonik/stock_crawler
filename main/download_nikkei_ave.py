@@ -2,17 +2,23 @@
 import urllib.request as req
 import os
 
+
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
 start_year = 2007
 end_year = 2017
 
+try:
+    relative_url = sys.argv[1]
+except IndexError:
+    relative_url = 'indices/I101/1d'
+
 ### functions #############################################################################################
 class NikkeiAveDownoader :
 
     def __init__(self):
-        self.url = 'http://k-db.com/indices/I101/1d/{{year}}?download=csv'
-        self.path = 'csv/indices_I101_1d_{{year}}.csv'
+        self.url = 'http://k-db.com/' + relative_url + '/{{year}}?download=csv'
+        self.path = 'csv/' + relative_url.replace('/', '_') + '_{{year}}.csv'
 
     def download(self, url):
         req.urlretrieve(

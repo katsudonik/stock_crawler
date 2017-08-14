@@ -2,18 +2,19 @@
 import numpy
 import pandas
 import matplotlib.pyplot as plt
+import os
 
 from sklearn import preprocessing
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation
 from keras.layers.recurrent import LSTM
-
 from pprint import pprint
 
-import os
-
-
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
+
+# predict price of next day from closing price up to previous day (20days:1 month)
+# train by data of 1 years sequences
+# Do not consider the long-term viewpoint
 
 class Lstm :
 
@@ -22,6 +23,7 @@ class Lstm :
         self.in_out_neurons = 1
         self.hidden_neurons = 300
         self.batch_size = 3
+        self.nb_epoch = 300
         self.csv = 'csv/indices_I101_1d_{{year}}.csv'
         self.display_train_sequence = False
 
@@ -77,7 +79,7 @@ class Lstm :
 
     def train(self, X_train, y_train) :
         model = self.create_model()
-        model.fit(X_train, y_train, self.batch_size, nb_epoch=100) #default:shuffle=True
+        model.fit(X_train, y_train, self.batch_size, nb_epoch=self.nb_epoch) #default:shuffle=True
         return model
 
     def display(self, predicted, actual):
