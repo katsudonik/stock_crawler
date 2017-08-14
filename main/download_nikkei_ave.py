@@ -1,7 +1,7 @@
 # coding:utf-8
 import urllib.request as req
 import os
-
+import sys
 
 os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
