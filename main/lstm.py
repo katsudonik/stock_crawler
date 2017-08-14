@@ -25,7 +25,6 @@ class Lstm :
 
     def load_data(self, data, n_prev=10):
         X, Y = [], []
-        pprint(data)
         for i in range(len(data) - n_prev):
             X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
             Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
