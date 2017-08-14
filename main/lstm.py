@@ -27,6 +27,7 @@ class Lstm :
         X, Y = [], []
         pprint(vars(data))
         for i in range(len(data) - n_prev):
+            print(i)
             X.append(data.iloc[i:(i+n_prev)].as_matrix()) #TODO speficicate row
             Y.append(data.iloc[i+n_prev].as_matrix()) #TODO
         retX = numpy.array(X)
