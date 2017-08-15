@@ -37,6 +37,9 @@ class Lstm :
         if 'stock' in relative_url:
             self.columns = ['date', 'open', 'high', 'low', 'close', 'yield', 'sales_value']
 
+        self.model_file = './lstm_model.json'
+        self.weights_file = './' + relative_url.replace('/', '_') + '_model.hdf5'
+
     def load_data(self, data):
         X, Y = [], []
         for i in range(len(data) - self.length_of_sequences):
@@ -95,6 +98,10 @@ class Lstm :
         self.model.fit(X_train, y_train, self.batch_size, nb_epoch=self.nb_epoch) #default:shuffle=True
         return self.model
 
+    def save_model(self):
+        open(self.model_file, 'w').write(self.model.to_json())
+        self.model.save_weights(self.weights_file)
+
     def display(self, predicted, actual):
         result = pandas.DataFrame(predicted)
         result.columns = ['predict']
@@ -126,5 +133,7 @@ class Lstm :
         self.model = self.create_model()
         for year in range(2007, 2017):
             self.learn(year)
+
+        self.save_model()
             
 
