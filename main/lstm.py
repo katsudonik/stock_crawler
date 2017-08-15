@@ -25,11 +25,11 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 class Lstm :
 
     def __init__(self, relative_url):
-        self.length_of_sequences = 20
-        self.in_out_neurons = 1
+        self.length_of_sequences = 20 # predict from previous 20day's value
+        self.in_out_neurons = 1 # predict target:stock value
         self.hidden_neurons = 300
         self.batch_size = 10
-        self.nb_epoch = 100
+        self.nb_epoch = 100 # Get data randomly and learn 100 times
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
 
@@ -121,10 +121,10 @@ class Lstm :
         model = self.train(xTrain, yTrain)
         self.display(model.predict(xTest), yTest)
 
+    # Every year the market can not be the same. so, don't refresh model through learning all data
     def run(self):
         self.model = self.create_model()
         for year in range(2007, 2017):
             self.learn(year)
             
-    # TODO problem: Every year the market can not be the same. term is should be longer
 
