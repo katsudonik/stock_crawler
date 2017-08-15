@@ -90,7 +90,7 @@ class Lstm :
                        batch_input_shape=(None, self.length_of_sequences, self.in_out_neurons), \
                        return_sequences=False))
         model.add(Dense(self.in_out_neurons))
-        model.add(Activation("linear"))
+        model.add(Activation("relu"))
         model.compile(loss="mape", optimizer="adam")
         return model
 
