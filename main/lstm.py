@@ -28,7 +28,7 @@ class Lstm :
         self.length_of_sequences = 20 # predict from previous 20day's value
         self.in_out_neurons = 1 # predict target:stock value
         self.hidden_neurons = 300
-        self.batch_size = 10
+        self.batch_size = 5
         self.nb_epoch = 100 # Get data randomly and learn 100 times
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
@@ -90,7 +90,7 @@ class Lstm :
                        batch_input_shape=(None, self.length_of_sequences, self.in_out_neurons), \
                        return_sequences=False))
         model.add(Dense(self.in_out_neurons))
-        model.add(Activation("relu"))
+        model.add(Activation("linear"))
         model.compile(loss="mape", optimizer="adam")
         return model
 
