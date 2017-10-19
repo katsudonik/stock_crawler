@@ -9,9 +9,10 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 
 ### functions #############################################################################################
 def init():
+    path = os.path.abspath(os.path.dirname(__file__))
     return {
-        'crawled_log' : '/home/vcp/stock_crawler/src/ch1/file_bk.txt',
-        'crawled_now' : '/home/vcp/stock_crawler/src/ch1/file.txt',
+        'crawled_log' : path + '/press_released.log',
+        'crawled_now' : path + '/press_release_now.log',
     }
 
 def crawl_nikkei():
