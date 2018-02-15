@@ -1,5 +1,5 @@
 predict next day's stock from 20days stock  
-shiffled traindata in each year.  
+shuffled traindata in each year.  
 result is like delay line.  
 
 predict rate is low...  
