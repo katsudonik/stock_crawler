@@ -5,5 +5,5 @@ result is like delay line.
 predict rate is low...  
 
 next  
-should train from longer term's date  
+should train from longer term's data 
 
