@@ -25,10 +25,10 @@ os.environ["NLS_LANG"] = "JAPANESE_JAPAN.AL32UTF8"
 class Lstm :
 
     def __init__(self, relative_url):
-        self.length_of_sequences = 20 # predict from previous 20day's value
+        self.length_of_sequences = 60 # predict from previous 60day's value
         self.in_out_neurons = 1 # predict target:stock value
         self.hidden_neurons = 300
-        self.batch_size = 5
+        self.batch_size = 1
         self.nb_epoch = 100 # Get data randomly and learn 100 times
         self.csv = 'csv/' + relative_url.replace('/', '_') + '_1d_{{year}}.csv'
         self.display_train_sequence = False
