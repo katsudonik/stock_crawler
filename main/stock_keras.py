@@ -85,5 +85,5 @@ if __name__ == "__main__":
     main()
 
 ## reference: https://deepage.net/deep_learning/2016/11/07/convolutional_neural_network.html#%E7%95%B3%E3%81%BF%E8%BE%BC%E3%81%BF%E3%81%A8%E3%81%AF
-
+## https://qiita.com/hiroeorz@github/items/33b85529be0829f34973
 
