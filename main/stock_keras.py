@@ -31,7 +31,7 @@ def build_model():
     model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet
     padding='same',
 	input_shape=(config['img']['height'], config['img']['width'], config['img']['channels']))) #channels_last #first layer in a model, provide input_shape
-    model.add(Activation('relu'))
+    model.add(Activation('relu')) #非線形回帰・勾配消失なし
     model.add(MaxPooling2D(pool_size=(2, 2))) #2*2に圧縮
     model.add(Dropout(0.25))
 
@@ -41,17 +41,17 @@ def build_model():
     model.add(Conv2D(64, (3, 3)))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
-    model.add(Flatten())
+    model.add(Flatten()) #平滑化
 
-    model.add(Dense(512))
+    model.add(Dense(512)) #512次元全結合
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
 
-    model.add(Dense(len(config['categories'])))
-    model.add(Activation('softmax'))
+    model.add(Dense(len(config['categories']))) #出力層(ノード数：カテゴリ数)
+    model.add(Activation('softmax')) #0-1の確率に正規化
 
-    model.compile(loss='binary_crossentropy',
-	optimizer='rmsprop',
+    model.compile(loss='binary_crossentropy', # crossentropy誤差
+	optimizer='rmsprop', #
 	metrics=['accuracy'])
     return model
 
