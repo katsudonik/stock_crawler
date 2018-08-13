@@ -23,7 +23,7 @@ def load_data(quantified_data_path):
     data['y_test']  = np_utils.to_categorical(y_test, len(config['categories']))
     return data
 
-# モデルを構築 --- (※2)
+# モデルを構築 --- (※2)　：畳み込みフィルタを学習する
 def build_model():
     model = Sequential()
 
