@@ -51,7 +51,7 @@ def build_model():
     model.add(Dense(len(config['categories']))) #出力層(ノード数：カテゴリ数)
     model.add(Activation('softmax')) #出力値（分類確率）を0-1に正規化
 
-    model.compile(loss='binary_crossentropy', # crossentropy誤差:多クラス分類
+    model.compile(loss='binary_crossentropy', # crossentropy誤差:多クラス分類 (Keras does backpropagation automatically. There's absolutely nothing you need to do for that)
 	optimizer='rmsprop', #
 	metrics=['accuracy'])
     return model
