@@ -51,7 +51,7 @@ def build_model():
     model.add(Dense(len(config['categories']))) #出力層(ノード数：カテゴリ数)
     model.add(Activation('softmax')) #0-1の確率に正規化
 
-    model.compile(loss='binary_crossentropy', # crossentropy誤差
+    model.compile(loss='binary_crossentropy', # crossentropy誤差:多クラス分類
 	optimizer='rmsprop', #
 	metrics=['accuracy'])
     return model
