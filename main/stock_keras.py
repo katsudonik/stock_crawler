@@ -28,23 +28,23 @@ def build_model():
     model = Sequential()
 
     #keras2->Conv2D
-    model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet: 学習対象
+    model.add(Conv2D(32, (3, 3),#畳み込み層（隠れ層） filter(convolution window/kernel):3*3size, 32 sheet: 学習対象
     padding='same',
 	input_shape=(config['img']['height'], config['img']['width'], config['img']['channels']))) #channels_last #first layer in a model, provide input_shape
     model.add(Activation('relu')) #非線形回帰・勾配消失なし
-    model.add(MaxPooling2D(pool_size=(2, 2))) #2*2に圧縮（最大値選択）
+    model.add(MaxPooling2D(pool_size=(2, 2))) #プーリング層（隠れ層） 2*2に圧縮（最大値選択）
     model.add(Dropout(0.25)) #drop rate:0.25
 
-    model.add(Conv2D(64, (3, 3), padding='same'))
+    model.add(Conv2D(64, (3, 3), padding='same')) #畳み込み層2（隠れ層）
     model.add(Activation('relu'))
 
-    model.add(Conv2D(64, (3, 3)))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Conv2D(64, (3, 3))) #畳み込み層3
+    model.add(MaxPooling2D(pool_size=(2, 2))) #プーリング層2（隠れ層）
     model.add(Dropout(0.25))
 
     model.add(Flatten()) #平滑化：ノイズ除去
 
-    model.add(Dense(512)) #512次元全結合
+    model.add(Dense(512)) #512次元 全結合層（隠れ層）
     model.add(Activation('relu'))
     model.add(Dropout(0.5))
 
