@@ -28,7 +28,7 @@ def build_model():
     model = Sequential()
 
     #keras2->Conv2D
-    model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet
+    model.add(Conv2D(32, (3, 3),#filter(convolution window/kernel):3*3size, 32 sheet: 学習対象
     padding='same',
 	input_shape=(config['img']['height'], config['img']['width'], config['img']['channels']))) #channels_last #first layer in a model, provide input_shape
     model.add(Activation('relu')) #非線形回帰・勾配消失なし
